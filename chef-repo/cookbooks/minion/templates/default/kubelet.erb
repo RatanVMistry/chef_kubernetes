@@ -1,0 +1,21 @@
+###
+# kubelet (minion) config
+
+# The address for the info server to serve on (set to 0.0.0.0 or "" for all interfaces)
+KUBELET_ADDRESS="--address=0.0.0.0"
+
+# The port for the info server to serve on
+# KUBELET_PORT="--port=10250"
+
+# You may leave this blank to use the actual hostname
+KUBELET_HOSTNAME="--hostname-override=<%= @host_ip -%>"
+
+# location of the api-server
+<% @master.each do |master| -%>
+KUBELET_API_SERVER="--api-servers=http://<%= master[:network][:interfaces][:eth1][:addresses].detect{|k,v| v[:family] == "inet" }.first -%>:8080"
+<% end -%>
+# pod infrastructure container
+KUBELET_POD_INFRA_CONTAINER="--pod-infra-container-image=registry.access.redhat.com/rhel7/pod-infrastructure:latest"
+
+# Add your own!
+KUBELET_ARGS=""
