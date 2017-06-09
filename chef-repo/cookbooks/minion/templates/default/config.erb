@@ -19,5 +19,5 @@ KUBE_ALLOW_PRIV="--allow-privileged=false"
 
 # How the controller-manager, scheduler, and proxy find the apiserver
 <% @master.each do |master| -%>
-KUBE_MASTER="--master=http://<%= master[:network][:interfaces][:eth1][:addresses].detect{|k,v| v[:family] == "inet" }.first -%>:8080"
+	KUBE_MASTER="--master=http://<%= master['ipaddress'] -%>:8080"
 <% end -%>

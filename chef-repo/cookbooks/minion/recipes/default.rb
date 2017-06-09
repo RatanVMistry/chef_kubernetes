@@ -18,7 +18,8 @@ package "kubernetes" do
 end
 
 master = search(:node, 'role:"master"')
-host_ip = node[:network][:interfaces][:eth1][:addresses].detect{|k,v| v[:family] == "inet" }.first
+host_ip = node['ipaddress']
+#host_ip = node[:network][:interfaces][:eth1][:addresses].detect{|k,v| v[:family] == "inet" }.first
 
 
 template "/etc/sysconfig/flanneld" do
@@ -55,20 +56,24 @@ end
 
 service "kube-proxy" do
 
-        action [ :enable, :restart ]
+        action [ :restart, :enable ]
 end
 
+#service "docker" do
+
+ #       action [ :restart, :enable ]
+#end
 service "kubelet" do
 
-        action [ :enable, :restart ]
+        action [ :restart, :enable ]
 end
 
 service "docker" do
 
-        action [ :enable, :restart ]
+        action [ :restart, :enable ]
 end
 
 service "flanneld" do
 
-        action [ :enable, :restart ]
+        action [ :restart, :enable ]
 end
