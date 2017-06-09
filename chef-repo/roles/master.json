@@ -1,0 +1,11 @@
+{
+	"name" : "master",
+	"default_attributes" : {
+		"kubernets" : {
+			"greeting" : "Kubernets_Master"
+		}
+	},
+	"run_list" :[
+		"recipe[master]"
+	]
+}
